@@ -1,0 +1,73 @@
+#include <iostream>
+using namespace std;
+
+string convertTo_(string word) {
+    string underscores = "";
+    for (int i = 0; i < word.length(); i++) {
+        underscores += "_";
+    }
+    return underscores;
+}
+void print(string word) {
+    for (int i = 0; i < word.length(); i++) {
+        cout << word[i] << " ";
+    }
+    cout << endl;
+}
+int main() {
+    char guess;
+    int missedguess = 0;
+    char missed_guess[7];
+    bool gameover = false;
+    
+    string word = "programming";
+    string underscores = convertTo_(word);
+
+    do {
+         for (int i = 0; i < underscores.length(); i++) {
+            cout << underscores[i] << " ";
+        }
+        cout << endl;
+        cout << endl;
+        if (missedguess > 0) {
+            cout << "Bad guesses: ";
+            for (int i = 0; i < missedguess; i++) {
+                cout << missed_guess[i] << " ";
+            }
+            cout << endl;
+        }
+        cout << "Guess a letter: ";
+        cin >> guess;
+        bool alreadyguessed = false;
+        for (int i = 0; i < missedguess; i++) {
+            if (missed_guess[i] == guess) {
+                alreadyguessed = true;
+            }
+        }
+        if (alreadyguessed) {
+            cout << "You already guessed that letter." << endl;
+        }
+        bool correctGuess = false;
+        for (int i = 0; i < word.length(); i++) {
+            if (word[i] == guess && underscores[i] == '_') {
+                underscores[i] = guess;
+                correctGuess = true;
+            }
+        }
+        if (!correctGuess) {
+            if (missedguess < 7) {
+                missed_guess[missedguess] = guess;
+                missedguess++;
+            }
+        }
+        cout << "You have " << missedguess << " bad guesses." << endl;
+        if (missedguess == 7) {
+            cout << "you have maxed out your bad guesses." << endl;
+            gameover = true;
+        }
+    } while (underscores != word && missedguess < 7);
+    if (underscores == word) {
+        cout << "you guessed it!: " << word << endl;
+    }
+}
+
