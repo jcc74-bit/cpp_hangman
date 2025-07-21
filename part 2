@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+void print(string s){
+	for(int i=0; i < s.length(); i++){
+		cout << s[i]<<" ";
+	}cout <<endl;
+}
+
+string convertTo_(string s){
+	string temp = "";
+	for(int i = 0; i < s.length(); i++){
+	    if (isalpha(s[i])){
+		    temp += "_";
+}
+	    else{
+	      temp += s[i];  
+	    }
+	}        
+	return temp;
+}
+
+int main(){
+	char guess;
+	int missCounter = 0;
+	string word =  "Hart's War";
+	// create a series of underscores for each letter.
+	string _word = convertTo_(word);
+	
+	
+	do{
+		bool isValid= false;
+		print(_word);
+		cout << "Miss Counter: " << missCounter <<endl;
+		cout << "Guess a letter: ";	
+		cin >> guess;
+		guess=tolower(guess);
+		for(int i = 0; i < word.length(); i++){
+			if(word[i] == guess && _word[i] != word[i]){
+				isValid = true;
+				_word[i] = word[i];
+			}
+		}
+		if(!isValid){
+			missCounter++;
+		}
+	}while(_word != word && missCounter < 5);
+	
+	if(missCounter >= 5){
+		cout << "You ran out of guesses.\n";
+		cout << "The answer was:\n";
+		print(word);
+	}
+	else{
+		print(_word);
+	}
+		
+	
+}
+
+
+
